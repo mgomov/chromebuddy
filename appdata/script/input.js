@@ -82,6 +82,7 @@ image_canvas.addEventListener('click', function(event) {
 		editing_point = false;
 		document.getElementById("point_annotation_div").style.display = "none";
 		document.getElementById("point_annotation_div").current_point = undefined;
+		save_to_master();
 		return;
 	}
 	// Don't want to register a click if we just dragged (which js will do), so 
@@ -212,6 +213,7 @@ $("point_delete").addEventListener("click", function (){
 			elemdiv2 = document.getElementById("point_annotation_div").style.display = "none";
 		}
 	}
+	save_to_master();
 });
 
 $("point_opacity_slider").addEventListener("change", function(){

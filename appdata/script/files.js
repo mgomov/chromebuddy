@@ -603,17 +603,42 @@ function debug_parse_image(arrbuf){
 	console.log(test);
 }
 
+function save_to_master() {
+    wd.getFile("main.sb", function (athing) {
+        console.log("1...");
+        console.log(athing);
+    }, function (entry) {
+        console.log("2...");
+        console.log(entry);
 
-function save_to_master(){
-	dir.getFile("main.sb", 	function(athing){
-		console.log("1...");
-		console.log(athing);
-	}, function(entry){
-		console.log("2...");
-		console.log(entry);
-		chrome.fileSystem.isWritableEntry(entry, function (writable){
-			console.log("THIS SHIT WRITABLE?");
-			console.log(writable);
-		});
-	}); 
+        chrome.fileSystem.isWritableEntry(entry, function (writable) {
+            if (writable) {
+                console.log("Writing to .sb file...");
+                entry.createWriter(function (writer) {
+                    //writer.write(JSON.stringify(master));
+                    var truncated = false;
+                    writer.onwriteend = function (e) {
+                        if (!truncated) {
+                            truncated = true;
+                            this.truncate(this.position);
+                            return;
+                        }
+                        console.log('Write completed.');
+                    };
+
+                    writer.onerror = function (e) {
+                        console.log('Write failed: ' + e.toString());
+                    };
+
+                    var blob = new Blob([JSON.stringify(master)], {
+                        type: 'plain/text'
+                    });
+                    writer.write(blob);
+
+                });
+            } else {
+                console.log("Can't write to the file! Things are going to start breaking...");
+            }
+        });
+    });
 }
