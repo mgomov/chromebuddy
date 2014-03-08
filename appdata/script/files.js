@@ -602,3 +602,18 @@ function debug_parse_image(arrbuf){
 	}
 	console.log(test);
 }
+
+
+function save_to_master(){
+	dir.getFile("main.sb", 	function(athing){
+		console.log("1...");
+		console.log(athing);
+	}, function(entry){
+		console.log("2...");
+		console.log(entry);
+		chrome.fileSystem.isWritableEntry(entry, function (writable){
+			console.log("THIS SHIT WRITABLE?");
+			console.log(writable);
+		});
+	}); 
+}
