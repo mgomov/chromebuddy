@@ -1,7 +1,7 @@
 /* studybuddy.js
  * Ties various things together... Global variables go here
  */
-
+var testArray = new Array();
 var w = window.innerWidth;	///< The height of the window that we can work with
 var h = window.innerHeight; ///< The width of the window we can work with
 

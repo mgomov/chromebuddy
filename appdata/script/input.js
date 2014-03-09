@@ -4,7 +4,7 @@
  */
 
 $("file_merge").addEventListener('click', function(event){
-
+	chrome.fileSystem.chooseEntry({type: 'openFile', acceptsMultiple : true}, chromebuddy_load);
 });
 
 $("file").addEventListener('click', function(event){

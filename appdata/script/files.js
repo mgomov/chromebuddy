@@ -54,9 +54,68 @@ function parse_file(result){
 // END parsing of a .sb file
 
 
+function check_audio_name_for_timestamp(audname)
+{
+        console.log(audname);  
+        if (audname[0] == '2' && audname[1] == '0')
+        {
+ 
+                var temp = audname.slice(0,audname.length-4);
+                console.log(temp);
+                var newAudStart = "";
+                for (var i = 0; i < temp.length; i++)
+                {
+                        if (i == 4 || i == 6 )
+                        {
+                                newAudStart += "/"
+                        }
+                        if (i == 11 || i==13)
+                        {
+                                newAudStart += ":"
+                        }
+                        newAudStart += temp[i];
+                       
+                }
+                newAudStart = new Date(newAudStart);
+                console.log("new time = " + newAudStart)
+                return newAudStart;
+        }
+        else
+            return 0;
+}
+function estimateTime(myArr, audioLength)
+{
+        var lastImage = myArr[myArr.length-1].date;
+        console.log("Audio began between ");
+        var audioStartDate = new Date(lastImage.getTime() - audioLength*1000);
+        console.log(audioStartDate);
+        console.log("and");
+        console.log(myArr[0].date);
+}
+
+function chromebuddy_load(file)
+{
+	console.log(file);
+	for (var j = 0; j < file.length; j++)
+	{
+		file[j].file(function(afile){
+			console.log(afile);
+			testArray.push(afile);
+			if (testArray.length==file.length)
+			{
+				console.log(testArray);
+				pre_load_merge_files(testArray);
+			}
+		})
+	}
+	console.log(testArray);
+}
+
 // START merge
 // Gets the audio duration and passes it to the merge
 function pre_load_merge_files(file){
+	console.log("pre load merge files function called");
+	console.log(file);
 
 	var tempA = document.getElementById("time_merge").value;
 	
@@ -73,6 +132,7 @@ function pre_load_merge_files(file){
 	var audfile;
 	_TEMPFILES = file;
 	for(var aud = 0; aud < file.files.length; aud++){
+			console.log(file.files[aud]);
 			if(file.files[aud].name.indexOf(".mp3") != -1 || file.files[aud].name.indexOf(".m4a") != -1){
 					audfile = file.files[aud];
 			}
