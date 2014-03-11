@@ -3,7 +3,7 @@
 <audio id="audio_player" src=""></audio>
 <image id="main_image" style="display:none;"></image>
 <nav id="left_menu">
-        <div id="left_menu_options">
+       
 			<!--<input type="file" id="file2" onchange="load_parse_image(this)"></input>-->
 			<li>Merge files</li>
 			<input type="button" id="file_merge" value="Merge Files"></input>
@@ -12,7 +12,8 @@
 			<input id="vol_slider" type="range" min="1" max="100" value="50"></input>
             <ul id="browser_list"><li>Choose a file below</li></ul>
 			<input type="button" id="file" value="Pick a Directory"></input>
-        </div>
+        
+		
 </nav>
 
 <div id = "point_annotation_div">
@@ -32,19 +33,25 @@
 	</div>
 </div>
 
+<div id="recording_info_div">
+	<textarea id="recording_info_name_edit"></textarea>
+	<image id="recording_info_preview" src=""></image>
+	<select id="recording_info_category">
+		<option value="0">A category</option>
+	</select>
+	<textarea id="recording_info_date_time" disabled></textarea>
+	<textarea id="recording_info_notes"></textarea>
+	<input type="button" id="recording_info_load" value="Load"></input>
+	<input type="button" id="recording_info_delete" value="Delete"></input>
+</div>
 
 <div id="container">
 	<canvas id="image_canvas"></canvas>
 	<textarea id="point_annotation_edit" current_point=""></textarea>
 </div>
+
 <canvas id="seek_canvas"></canvas>
 <canvas id="seek_overlay_canvas"></canvas>
- 
-<div id="point_context_menu">
-                <div><a id="movePoint">Move</div>
-                <div><a id="deletePoint">Delete</div>
-                <div><a id="movePoint">Move point</div>
-</div>
  
 <audio id="duration_source" src="" ></audio>
  

@@ -63,12 +63,56 @@ function parse_file(result){
 		var list_element = document.createElement("li");
 		var list_element_anchor = document.createElement("a");
 		list_element_anchor.id = i.toString();
-		list_element_anchor.onclick = function(){load_recording(this); };
+		
+		list_element_anchor.addEventListener("mouseover", function(){
+			if(preview_display) return;
+			set_preview(parseInt(this.id));
+			console.log(preview_images);
+			console.log(preview_images[parseInt(this.id)]);
+		});
+		
+		list_element_anchor.addEventListener("mouseleave", function(){
+			reset_preview();
+		});
+		
+		list_element_anchor.onclick = function(){set_preview_display(this.id)};
 		list_element_anchor.innerHTML = master.Recordings[i].title;
 		list_element.appendChild(list_element_anchor);
 		recording_list.appendChild(list_element);
 	}
+	
+	for(var j = 0; j < master.Recordings.length; j++){
+		var animg = new Image();
+		animg.onload = function(){
+			console.log("loaded preview");
+		}
+		preview_images.push(animg);
+	}
+	
+	for(var k = 0; k < master.Recordings.length; k++){
+		console.log("calling load");
+		load_image_preview(k);
+	}
+	
 }
+
+function load_image_preview(index){
+	console.log("Loading preview images...");
+	wd.getFile("data/" + master.Recordings[index].Events[0].image, function(athing){
+		console.log("1...");
+		console.log(athing);
+	}, function(entry){
+		console.log("2...");
+		entry.file(function(afile){
+			preview_images[index].src = webkitURL.createObjectURL(afile);
+		});
+	});
+}
+
+
+
+
+
 // END parsing of a .sb file
 
 
@@ -228,7 +272,7 @@ function create_merged_file(myArr, audioLength, audname)
  		"title":"Untitled",
  		"audio":"",
  		"category":"",
- 		"notes":"",
+ 		"notes":"Add notes here!",
  		"Events": []
  	}
 
@@ -330,15 +374,38 @@ function create_merged_file(myArr, audioLength, audname)
 	console.log("End my code");
 	console.log(constr_array);
 	master.Recordings.push(constr_array);
+	reset_recording_browser();
+}
 
+function reset_recording_browser(){
 	var recording_list = document.getElementById("browser_list");
 	recording_list.innerHTML="";
+	
+	var le = document.createElement("li");
+	var le_anchor = document.createElement("a");
+	le_anchor.id = -1;
+	le_anchor.innerHTML = "Choose a file below";
+	le.appendChild(le_anchor);
+	recording_list.appendChild(le);
+	
 	for(var i = 0; i < master.Recordings.length; i++){
 		var list_element = document.createElement("li");
 		var list_element_anchor = document.createElement("a");
 		list_element_anchor.id = i.toString();
-		list_element_anchor.onclick = function(){load_recording(this); };
+		list_element_anchor.onclick = function(){set_preview_display(this.id)};
 		list_element_anchor.innerHTML = master.Recordings[i].title;
+		
+		list_element_anchor.addEventListener("mouseover", function(){
+			if(preview_display) return;
+			set_preview(parseInt(this.id));
+			console.log(preview_images);
+			console.log(preview_images[parseInt(this.id)]);
+		});
+		
+		list_element_anchor.addEventListener("mouseleave", function(){
+			reset_preview();
+		});
+		
 		if(master.Recordings[i].title == ""){
 			list_element_anchor.innerHTML = "Untitled";
 		}
@@ -346,8 +413,6 @@ function create_merged_file(myArr, audioLength, audname)
 		console.log(list_element_anchor.id);
 		recording_list.appendChild(list_element);
 	}
-	
-
 }
 /*
 // Perform merging

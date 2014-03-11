@@ -41,6 +41,9 @@ var point_ctx = document.getElementById("point_context_menu"); ///< The editing 
 var _TEMPFILES;  ///< Temp var to pass files to main merge, DO NOT REFERENCE outside of merge process
 
 var images = new Array();  ///< Array of images for the current recording
+
+var preview_images = new Array();
+
 var seek_draw = false;  ///< Boolean telling us if we should be drawing the mouseover preview
 var seek_draw_event;  ///< The number of the event that we're previewing (in context of Recording[seek_draw_event])
 var seek_draw_x;  ///< What we're mousing over in terms of x coordinates
@@ -52,6 +55,11 @@ var seek_display_opacity = 1.0; ///< Var for controlling transparency for fading
 var path = ""; ///< Var for the path of the main.sb's data
 
 var wd; ///< Working directory object; we have permissions to read & write here
+
+var preview_index;
+
+var preview_display = false; 
+
 /*! \fn 	init
  * 	\brief 	Initializes the window width and heights properly.
  *  \brief  Called on startup and window resize.

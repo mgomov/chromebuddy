@@ -24,6 +24,10 @@ ul
 a
 {
 	display:block;
+		-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+			width:100%;
 }
 
 li
@@ -31,12 +35,16 @@ li
 	background:#050505;
 	font: 100%/120% Helvetica, sans-serif;
 	color:#dfdfdf;
-	width:10em;
+	width:150px;
 	list-style-type: none;
 	border:solid;
 	border-width:1px;
 	border-color:#bfbfbf;
 	left:0;
+	
+		-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 textarea
@@ -118,7 +126,10 @@ textarea
 
 #point_annotation_edit
 {
-	width:99%;
+	width:100%;
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 	border:none;
 	height:200px;
 }
@@ -156,4 +167,63 @@ textarea
 	height:35px;
 	border-width:8px;
 	border-top-width:4px;
+}
+
+#recording_info_div
+{
+	border:solid;
+	border-width:8px;
+	border-color:#000000;
+	text-align:center;
+	position:absolute;
+	top:500px;
+	left:500px;
+	width:200px;
+	height:330px;
+	background:grey;
+	display:block;
+	
+	color:black;
+	z-index:1;
+}
+
+#recording_info_name_edit
+{
+	overflow:hidden;
+	height:1.5em;
+	width:100%;
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+#recording_info_date_time
+{
+	overflow:hidden;
+	height:1.5em;
+	width:100%;
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+#recording_info_notes
+{
+	height:7em;
+	width:100%;
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+#recording_info_preview
+{
+	width:200px;
+	height:150px;
+	display:block;
+}
+
+#recording_info_category
+{
+	width:100%;
 }

@@ -3,6 +3,46 @@
  * Input-related handlers go here (e.g. click listeners, mouse movement listeners, etc)
  */
 
+
+ 
+$("recording_info_name_edit").addEventListener('input', function(event){
+	master.Recordings[preview_index].title = document.getElementById("recording_info_name_edit").value;
+});
+
+$("recording_info_name_edit").addEventListener('blur', function(event){
+	console.log("Saving name edits to master...");
+	save_to_master();
+});
+
+/*
+document.getElementById("recording_info_date_time").addEventListener('input', function(event){
+	document.getElementById("recording_info_div").current_point.annotation = document.getElementById("point_annotation_edit").value;
+});
+*/
+
+$("recording_info_load").addEventListener('click', function(event){
+	load_recording(preview_index);
+	preview_display = false;
+	reset_preview();
+});
+
+$("recording_info_delete").addEventListener('click', function(event){
+	delete_recording(preview_index);
+	preview_display = false;
+	reset_recording_browser();
+	reset_preview();
+});
+
+
+document.getElementById("recording_info_notes").addEventListener('input', function(event){
+	master.Recordings[preview_index].notes = document.getElementById("recording_info_notes").value;
+}); 
+ 
+$("recording_info_notes").addEventListener('blur', function(event){
+	console.log("Saving notes edits to master...");
+	save_to_master();
+}); 
+ 
 $("file_merge").addEventListener('click', function(event){
 	chrome.fileSystem.chooseEntry({type: 'openFile', acceptsMultiple : true}, chromebuddy_load);
 });
@@ -94,8 +134,10 @@ image_canvas.addEventListener('click', function(event) {
 
 	
 	// Hide the point context menu if it's displaying
-	point_ctx_display = false;
-	point_ctx.style.display ="none";
+	if(point_ctx_display){
+		point_ctx_display = false;
+		point_ctx.style.display ="none";
+	}
 	
 	var x = event.pageX - image_canvas.offsetLeft;
 	var y = event.pageY - image_canvas.offsetTop;
@@ -178,9 +220,6 @@ image_canvas.addEventListener('click', function(event) {
 image_canvas.addEventListener('contextmenu', function(event) {
 	// Don't want the browser's context menu to pop up for now
 	event.preventDefault();
-	point_ctx.style.display = "block";
-	point_ctx.style.left = event.clientX + "px";
-	point_ctx.style.top = event.clientY + "px";
 	
 	var x = event.pageX - image_canvas.offsetLeft;
 	var y = event.pageY - image_canvas.offsetTop;
@@ -196,11 +235,11 @@ $("point_more_options").addEventListener('click', function(){
 	var elemdiv2 = document.getElementById("point_annotation_div");
 	if(elemdiv.style.display == "none" || elemdiv.style.display == ""){
 		elemdiv2.style.borderBottomWidth = 0 + "px";
-		elem.value = "Less Options";
+		$("point_more_options").value = "Less Options";
 		elemdiv.style.display = "block";
 	} else {
 		elemdiv2.style.borderBottomWidth = 8 + "px";
-		elem.value = "More Options";
+		$("point_more_options").value = "More Options";
 		elemdiv.style.display = "none";
 	}
 });
@@ -222,7 +261,7 @@ $("point_opacity_slider").addEventListener("change", function(){
 });
 
 $("point_color_picker").addEventListener("change", function (){
-	document.getElementById("point_annotation_div").current_point.color = $("point_color_picker.value").value;
+	document.getElementById("point_annotation_div").current_point.color = $("point_color_picker").value;
 });
 
 $("point_lock").addEventListener("change", function (){
@@ -232,3 +271,35 @@ $("point_lock").addEventListener("change", function (){
 $("point_orientation_select").addEventListener("change", function (){
 	document.getElementById("point_annotation_div").current_point.orientation = $("point_orientation_select").value;
 });
+
+function set_preview(recindex){
+	preview_index = recindex;
+	console.log(master);
+	console.log(recindex);
+	console.log(master.Recordings.length);
+	$("recording_info_div").style.display = "block";
+	var notes = $("recording_info_notes");
+	var categ = $("recording_info_category");
+	var name  = $("recording_info_name_edit");
+	var date  = $("recording_info_date_time");
+	var image = $("recording_info_preview");
+	$("recording_info_div").style.top = $("browser_list").offsetTop + "px";
+	$("recording_info_div").style.left = ($("browser_list").offsetLeft + 150) + "px";
+	image.src = preview_images[recindex].src;
+	notes.value = master.Recordings[recindex].notes;
+	// categ.value = ;
+	name.value = master.Recordings[recindex].title;
+	// date.value = ;
+}
+
+function set_preview_display(idx){
+	preview_display = !preview_display;
+	preview_index = idx;
+}
+
+function reset_preview(){
+	if(preview_display){
+		return;
+	}
+	$("recording_info_div").style.display = "none";
+}

@@ -35,9 +35,9 @@ function get_event(time){
 }
 
 // Load a recording picked from the browser
-function load_recording(elem){
-	console.log("LOADING INDEX " + elem.id);
-	recording = master.Recordings[elem.id];
+function load_recording(idx){
+	console.log("LOADING INDEX " + idx);
+	recording = master.Recordings[idx];
 	//audio.src = path + "data/" + recording.audio;
 	wd.getFile("data/" + recording.audio, function(athing){
 		console.log("1...");
@@ -48,8 +48,7 @@ function load_recording(elem){
 			audio.src = webkitURL.createObjectURL(afile);
 		});
 	});
-	
-	elem.style.color = "#00ff00";	
+		
 	audio.load();
 	current_event = -1;
 
@@ -115,4 +114,9 @@ function seek_calculate(x){
 	x -= 10;
 	time = (x / (seek_canvas.width - 15)) * audio.duration;
 	return time;
+}
+
+function delete_recording(idx){
+	master.Recordings.splice(idx, 1);
+	save_to_master();
 }
