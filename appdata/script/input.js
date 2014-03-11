@@ -7,6 +7,8 @@
  
 $("recording_info_name_edit").addEventListener('input', function(event){
 	master.Recordings[preview_index].title = document.getElementById("recording_info_name_edit").value;
+	save_to_master();
+	reset_recording_browser();
 });
 
 $("recording_info_name_edit").addEventListener('blur', function(event){

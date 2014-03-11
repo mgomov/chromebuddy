@@ -181,7 +181,7 @@ textarea
 	width:200px;
 	height:330px;
 	background:grey;
-	display:block;
+	display:none;
 	
 	color:black;
 	z-index:1;
