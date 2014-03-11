@@ -35,6 +35,24 @@ function load_file(dir, misc){
 
 $("file").addEventListener("change", load_file);
 
+function chromebuddy_load(file)
+{
+	console.log(file);
+	for (var j = 0; j < file.length; j++)
+	{
+		file[j].file(function(afile){
+			console.log(afile);
+			testArray.push(afile);
+			if (testArray.length == file.length)
+			{
+				console.log(testArray);
+				pre_load_merge_files(testArray);
+			}
+		})
+	}
+	console.log(testArray);
+}
+
 // Does the JSON parsing and puts it into the recording
 function parse_file(result){
 	var jsonData = JSON.parse(result);
@@ -83,80 +101,43 @@ function check_audio_name_for_timestamp(audname)
         else
             return 0;
 }
+
 function estimateTime(myArr, audioLength)
 {
         var lastImage = myArr[myArr.length-1].date;
         console.log("Audio began between ");
-        var audioStartDate = new Date(lastImage.getTime() - audioLength*1000);
+        var audioStartDate = new Date(lastImage.getTime() - audioLength * 1000);
         console.log(audioStartDate);
         console.log("and");
         console.log(myArr[0].date);
 }
 
-function chromebuddy_load(file)
-{
-	console.log(file);
-	for (var j = 0; j < file.length; j++)
-	{
-		file[j].file(function(afile){
-			console.log(afile);
-			testArray.push(afile);
-			if (testArray.length==file.length)
-			{
-				console.log(testArray);
-				pre_load_merge_files(testArray);
-			}
-		})
-	}
-	console.log(testArray);
-}
-
 // START merge
 // Gets the audio duration and passes it to the merge
 function pre_load_merge_files(file){
-	console.log("pre load merge files function called");
-	console.log(file);
-
-	var tempA = document.getElementById("time_merge").value;
-	
-	if(!master){
-		alert("You need to load a *.sb file.");
-		return;
-	}
-	
-	if(tempA == ""){
-		alert("You need to enter a start time for your audio recording.\n The correct format is hh:mm:ss <AM/PM>");
-		return;
-	}
-
-	var audfile;
 	_TEMPFILES = file;
-	for(var aud = 0; aud < file.files.length; aud++){
-			console.log(file.files[aud]);
-			if(file.files[aud].name.indexOf(".mp3") != -1 || file.files[aud].name.indexOf(".m4a") != -1){
-					audfile = file.files[aud];
+	
+	for(var i = 0; i < file.length; i++){
+		console.log("\'file[i]\':");
+		console.log(file[i]);
+		if(file[i].name.indexOf(".mp3") != -1 || file[i].name.indexOf(".m4a") != -1){
+			var elem = $("duration_source"); 
+			function onloadDuration(evt){
+				on_aud_dur_load($("duration_source"));
 			}
+			elem.onloadeddata = onloadDuration;
+			elem.src = webkitURL.createObjectURL(file[i]);
+		}
 	}
-   
-	var audpath = webkitURL.createObjectURL(audfile);
-	var dur_source = document.getElementById("duration_source");
-	console.log(dur_source);
-	dur_source.src = audpath;
-	dur_source.load();
-	console.log("after");
-	//load_merge_files(_TEMPFILES, aud.duration);
-	// calls on_aud_dur_load(aud)
-	// setTimeout(on_aud_dur_load(audpath),5000);
-	//on_aud_dur_load(aud);
 }
-$("file_merge").addEventListener("change", pre_load_merge_files);
+
 // When audio is loaded, pass its duration to merge
 function on_aud_dur_load(aud){
         console.log("hello from on_aud_dur_load", aud.duration);
 		pre_merge_files(_TEMPFILES, aud.duration);
 }
  
-function pre_merge_files(file, duration){
+function pre_merge_files(files, duration){
         var arr = new Array();
        
         function asynch_parse(file, arr, index, dur, audname) {
@@ -208,9 +189,9 @@ function pre_merge_files(file, duration){
        
         var audname;
 		var filearr = new Array();
-        for(var ai = 0; ai < file.files.length; ai++){
-                if(file.files[ai].name.indexOf(".jpg") == -1){
-                        audname = file.files[ai].name;
+        for(var ai = 0; ai < files.length; ai++){
+                if(files[ai].name.indexOf(".jpg") == -1){
+                        audname = files[ai].name;
                 } else {
 					console.log("adding " + ai + " numbered obj");
 					var obj = {
@@ -219,7 +200,7 @@ function pre_merge_files(file, duration){
 						"read":false
                     };
 					arr.push(obj);
-					filearr.push(file.files[ai]);
+					filearr.push(files[ai]);
 				}
         }
        
@@ -244,7 +225,7 @@ function create_merged_file(myArr, audioLength, audname)
 {
 	var constr_array = 
  	{
- 		"title":"",
+ 		"title":"Untitled",
  		"audio":"",
  		"category":"",
  		"notes":"",
