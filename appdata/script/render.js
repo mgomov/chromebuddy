@@ -1,3 +1,5 @@
+console.log("fifth");
+
 /* render.js
  * Rendering the main canvases and all of the drawing that goes on in the
  * canvases goes here. 
@@ -84,6 +86,7 @@ function draw_second_layer(){
 	// Draw the actual seek bar
 	seek_context.fillStyle ="#0f0f0f";
 	roundRect(seek_context, 5, 5, seek_canvas.width - 10, seek_canvas.height - 10, 15, true, true);
+	var sc = 0;
 	if(recording){
 		for(var i = 0; i < recording.Events.length; i++){
 			var an_event = recording.Events[i];
@@ -92,7 +95,15 @@ function draw_second_layer(){
 			var w = ((an_event.time + an_event.duration) / audio.duration) * seek_canvas.width;
 			var h = seek_canvas.height;
 			
-			seek_context.fillStyle = "#5555ff";
+			if(sc % 2 == 0){
+				seek_context.fillStyle = "#5555ff";
+			} else {
+				seek_context.fillStyle = "#ff5555";
+			}
+			sc++;
+			if(sc > 1000000){
+				sc = 0;
+			}
 			seek_context.fillRect(ix, 4, w - ix, h - 8);
 			//seek_context.stroke();
 		}

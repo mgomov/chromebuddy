@@ -1,3 +1,4 @@
+console.log("sixth");
 
 /* input.js
  * Input-related handlers go here (e.g. click listeners, mouse movement listeners, etc)
@@ -296,6 +297,13 @@ function set_preview(recindex){
 
 function set_preview_display(idx){
 	preview_display = !preview_display;
+	
+	if(!preview_display){
+		$("recording_info_div").style.background = "grey";
+	}else{
+		$("recording_info_div").style.background = "#82E682";
+	}
+	
 	preview_index = idx;
 }
 

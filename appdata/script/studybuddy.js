@@ -1,3 +1,5 @@
+console.log("second");
+
 /* studybuddy.js
  * Ties various things together... Global variables go here
  */
@@ -15,6 +17,11 @@ var audio = document.getElementById("audio_player");  ///< The audio player whic
 
 var image_canvas = document.getElementById("image_canvas");  ///< Image canvas that takes up the whole screen
 var image_context = image_canvas.getContext("2d"); ///< Image cavnas' context, for drawing to
+
+//var image_canvas = document.createElement('canvas');
+//var image_context = image_canvas.getContext("2d");
+//image_canvas.id="image_canvas";
+//document.body.appendChild(image_canvas);
 
 var event_switched = false; ///< Boolean which tells if the event was switched and things need to be changed
 
@@ -81,12 +88,6 @@ function init(){
 	seek_canvas.relativeY = image_canvas.height - seek_canvas.height - 50;
 }
 
-init(); 
-render_main_screen();
-
-// Adds render of the main canvas to a loop
-setInterval(render_main_screen, 20);
-
 // On resize, recalculate bounds for everything; render loop takes care
 // of the redrawing
 window.addEventListener('resize', function(event){
@@ -94,15 +95,4 @@ window.addEventListener('resize', function(event){
 	seek_overlay_context.fillStyle="#000000";
 	seek_overlay_context.fillRect(0, 0, 2000, 2000);
 	init();
-});
-
-
-/*! \fn 	change_volume
- * 	\brief 	Changes the volume
- *  \brief  Called from the DOM element "vol_slider"
- * 	\var
- */
-
-$("vol_slider").addEventListener("change", function(){
-	audio.volume = $("vol_slider").value / 100;
 });

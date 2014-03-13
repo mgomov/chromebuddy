@@ -1,3 +1,5 @@
+console.log("third");
+
 /* files.js
  * Handles manipulation of external files
  */

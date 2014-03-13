@@ -1,3 +1,5 @@
+console.log("fourth");
+
 /* events.js
  * Handles event switching and loading, including loading new recordings
  */

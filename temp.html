@@ -13,44 +13,31 @@
 			<input type="button" id="file" value="Pick a Directory"></input>
 </nav>
 <div id="mainmenudiv_background">
-	<div id="menus_div">
-		<div id="mainmenu_nav">
-			<input type="button" id="mainmenu_help" value="Help"></input>
-			<input type="button" id="mainmenu_feedback" value="Give us Feedback"></input>
-			<input type="button" id="mainmenu_gotomerge" value="Merge Files"></input>
-			<input type="button" id="mainmenu_gotosettings" value="Settings"></input>
-			<input type="button" id="mainmenu_gotobrowse" value="Recordings"></input>
-			<input type="button" id="mainmenu_gotoannotations" value="Annotations"></input>
+	<div id = "mainmenudiv">
+		<input type="button" id="mainmenu_back" value="<- Back"></input>
+		<input type="button" id="mainmenu_feedback" value="Give us Feedback"></input>
+		<div id="mainmenu">
+			<input type="button" id="demo1" value="Merge Files"></input>
+			<input type="button" id="demo2" value="Settings"></input>
+			<input type="button" id="demo3" value="Browse Recordings"></input>
 		</div>
-		<div id = "mainmenudiv">
-			<div id="mergemenu">
-				<div id="mergemenu_header">Merge Menu</div>
-				<div id="mergemenu_1">
-					<textarea id="merge_hour"> </textarea>
-					<textarea id="merge_minute"></textarea>
-					<textarea id="merge_second"></textarea>
-				</div>
-				<div id="mergemenu_2">
-					<input type="button" value="Pick your files"></input>
-				</div>
-				<div id="mergemenu_3">
-					Edit time here! 
-				</div>
+		<div id="mergemenu">
+			<div id="mergemenu_1">
+				<textarea id="merge_hour"> </textarea>
+				<textarea id="merge_minute"></textarea>
+				<textarea id="merge_second"></textarea>
 			</div>
-			
-			<div id="browsemenu">
-				<div id="browsemenu_header">Browse Menu</div>
-				
+			<div id="mergemenu_2">
+				<input type="button" value="Pick your files"></input>
 			</div>
-			
-			<div id="settingsmenu">
-				<div id="settingsmenu_header">Settings Menu</div>
-				<input type="checkbox" id="settings_tips"></input>
+			<div id="mergemenu_3">
+				Edit time here! 
 			</div>
-			
-			<div id="pointsmenu">
-			
-			</div>
+		</div>
+		<div id="browsemenu">
+			<input type="button" id="demo7" value="Merge Files"></input>
+			<input type="button" id="demo8" value="Settings"></input>
+			<input type="button" id="demo9" value="Browse Recordings"></input>
 		</div>
 	</div>
 </div>
@@ -91,13 +78,14 @@
 
 <canvas id="seek_canvas"></canvas>
 <canvas id="seek_overlay_canvas"></canvas>
+ 
 <audio id="duration_source" src="" ></audio>
-
-<script src="appdata/script/utils.js" defer></script>
-<script src="appdata/script/studybuddy.js" defer></script>
-<script src="appdata/script/files.js" defer></script>
-<script src="appdata/script/events.js" defer></script>
-<script src="appdata/script/render.js" defer></script>
-<script src="appdata/script/input.js" defer></script>
-<script src="appdata/script/run.js" defer></script>
+ 
+<script src="appdata/script/utils.js"></script>
+<script src="appdata/script/files.js"></script>
+<script src="appdata/script/events.js"></script>
+<script src="appdata/script/render.js"></script>
+<script src="appdata/script/input.js"></script>
+<script src="appdata/script/studybuddy.js"></script>
+ 
 </html>
